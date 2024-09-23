@@ -1,0 +1,12 @@
+const express = require("express");
+const router = express.Router();
+const userCon = require("../controllers/userController/userController");
+const verifyToken = require("../middleware/verifyToken");
+const uploadImage = require("../middleware/uploadImage");
+router.put("/editProfile", verifyToken, uploadImage, userCon.editProfile);
+router.get("/getUserInfo", verifyToken, userCon.getUserInfo);
+router.get("/getUserOrders", verifyToken, userCon.getUserOrders);
+router.get("/getWishList", verifyToken, userCon.getWishList);
+router.post("/tipToTheRider/:");
+router.patch("/editLocation", verifyToken, userCon.editLocation);
+module.exports = router;

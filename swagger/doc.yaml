@@ -1,0 +1,186 @@
+openapi: 3.0.0
+info:
+  title: "Inscore App API Documentation"
+  version: "1.0.0"
+  description: "Documentation for the Inscore app API"
+
+paths:
+  /api/auth/signUp:
+    post:
+      tags:
+        - "User"
+      summary: "Sign Up"
+      description: "Registers a new user"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Enter the user's name
+                email:
+                  type: string
+                  format: email
+                  description: "Enter the user's email"
+                password:
+                  type: string
+                  description: "Enter the user's password"
+                confirmPassword:
+                  type: string
+                  description: "Re-enter the user's password"
+      responses:
+        "201":
+          description: "User registered successfully"
+        "400":
+          description: "Validation error or User already exists"
+        "503":
+          description: "Service unavailable"
+
+  /api/auth/verifyOtp:
+    post:
+      tags:
+        - "User"
+      summary: "Verify OTP"
+      description: "Verify the OTP sent to the user's email"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  description: "User ID"
+                otp:
+                  type: string
+                  description: "OTP received on the user's email"
+      responses:
+        "200":
+          description: "User is verified"
+        "401":
+          description: "Incorrect OTP or User not found"
+        "403":
+          description: "User not found, register yourself"
+        "500":
+          description: "Internal server error"
+
+  /api/auth/forgot:
+    post:
+      tags:
+        - "User"
+      summary: "Forgot Password"
+      description: "Send OTP to the user's email for password reset"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: "User's email for password reset"
+      responses:
+        "200":
+          description: "OTP is sent to the user's email"
+        "401":
+          description: "User not found"
+        "500":
+          description: "Internal server error"
+
+  /api/auth/verifyForgotOtp:
+    post:
+      tags:
+        - "User"
+      summary: "Verify Forgot Password OTP"
+      description: "Verify the OTP sent to the user's email for password reset"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  description: "User ID"
+                otp:
+                  type: string
+                  description: "OTP received on the user's email"
+      responses:
+        "200":
+          description: "OTP is verified. You can reset your password now."
+        "401":
+          description: "Wrong or expired OTP"
+        "500":
+          description: "Internal server error"
+
+  /api/auth/newPassword:
+    post:
+      tags:
+        - "User"
+      summary: "New Password"
+      description: "Set a new password for the user"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  description: "User ID"
+                password:
+                  type: string
+                  description: "New password"
+                newPassword:
+                  type: string
+                  description: "Re-enter new password"
+      responses:
+        "200":
+          description: "Password updated successfully"
+        "400":
+          description: "Invalid user or password"
+        "401":
+          description: "Password is not match"
+        "500":
+          description: "Internal server error"
+
+  /api/auth/login:
+    post:
+      tags:
+        - "User"
+      summary: "Login"
+      description: "User login"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: "User's email for login"
+                password:
+                  type: string
+                  description: "User's password for login"
+                registrationToken:
+                  type: string
+                  description: "User's registration token"
+      responses:
+        "200":
+          description: "Login successfully"
+        "400":
+          description: "Validation error"
+        "401":
+          description: "User not found or Incorrect password"
+        "500":
+          description: "Internal server error"

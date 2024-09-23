@@ -1,14 +1,12 @@
-const stripe = require("stripe")(
-  "sk_test_51HrgPnHIlG22eyXZ5wKOgHsDFQytmNm6ODbh1yueQFuYCHZR6OvJj4vpQrsvdF7WV0aH4XcVmRkJzjpfdk6PUNcD00bJy7Mhoq"
-);
+const stripe = require("stripe")();
 //abc
-const endpoint_secret = "whsec_mGjKpjcaAmq3yAg6r4TKKudrJWle3eoC"; //"whsec_mGjKpjcaAmq3yAg6r4TKKudrJWle3eoC";
+const endpoint_secret = "";
 
 async function StripeWebhook(req, res) {
   const sig = req.headers["stripe-signature"];
 
   let event;
-
+  //abc
   try {
     event = stripe.webhooks.constructEvent(req.body, sig, endpoint_secret);
   } catch (err) {
